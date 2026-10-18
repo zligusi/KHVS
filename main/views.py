@@ -8,12 +8,15 @@ def home (request):
     Carttridge.objects.all()
     products = []
     for device, liquid, carttridge in zip_longest(device, liquid, carttridge):
-        if device:
+        if device and device.stock > 0 :
             products.append(device)
-        if liquid:
+        if liquid and liquid.stock > 0 :
             products.append(liquid)
-        if carttridge:
+        if carttridge and carttridge.stock > 0 :
             products.append(carttridge)
+        
+
+    
     return render(request, 'main/home.html', {'products': products})
     
 
