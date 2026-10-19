@@ -28,5 +28,6 @@ def home (request):
                                               'top_products': top_products})
     
 
-
+def about (request):
+    return render(request, 'main/about.html')
 

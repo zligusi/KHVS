@@ -1,0 +1,20 @@
+{% extends "main/layout.html" %}
+
+{% block title %}
+    Kharkiv Vape Shop
+{% endblock title %}
+
+{% block content %}
+    <div class="welcome">
+        <p>Welcome to  Kharkiv vape shop. Here you'll find everything 
+            you need for pod systems including the systems themselves.</p>
+    </div>
+
+    <div class="top_product_list">
+        {{ top_product }}
+    </div>
+
+    <div class="product_list">
+        {{ products }}
+    </div>
+{% endblock content %}
