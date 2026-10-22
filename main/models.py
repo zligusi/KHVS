@@ -9,7 +9,7 @@ class Category(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
-        super().self(*args, **kwargs)
+        super().save(*args, **kwargs)
         
         
     def __str__(self):
@@ -33,7 +33,7 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
-        super().self(*args, **kwargs)
+        super().save(*args, **kwargs)
             
             
     def __str__(self):

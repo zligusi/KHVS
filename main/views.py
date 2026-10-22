@@ -11,29 +11,28 @@ def home (request):
 
     for device, liquid, carttridge in zip_longest(devices, liquids, carttridges):
         if device and device.stock > 0 :
-            device.category = 'device'
+            device.product_type = 'device'
             products.append(device)
         if liquid and liquid.stock > 0 :
-            liquid.category = 'liquid'
+            liquid.product_type = 'liquid'
             products.append(liquid)
         if carttridge and carttridge.stock > 0 :
-            carttridge.category = 'carttridg'
+            cartproduct_type = 'carttridg'
             products.append(carttridge)
 
-    top_devices = Device.objects.filter(top_product=True)[:5],
-    top_liquids = Liquid.objects.filter(top_product=True)[:3],
-    top_carttridges = Carttridge.objects.filter(top_product=True)[:2],
+    top_devices = Device.objects.filter(top_product=True)[:5]
+    top_liquids = Liquid.objects.filter(top_product=True)[:3]
+    top_carttridges = Carttridge.objects.filter(top_product=True)[:2]
 
     for d in top_devices:
-        d.category = 'device'
+        d.product_type = 'device'
     for l in top_liquids:
-        l.category = 'liquid'
+        l.product_type = 'liquid'
     for c in top_carttridges:
-        c.category = 'carttridge'
+        c.product_type= 'carttridge'
 
     top_products = list(top_devices) + list(top_liquids) + list(top_carttridges)
 
-    
     return render(request, 'main/home.html', {'products': products,
                                               'top_products': top_products,})
 
