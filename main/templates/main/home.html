@@ -13,7 +13,7 @@
     <div class="top_product_list">
         {% for product in top_products %}
             <div class="cart">
-                <a href="{%url 'main/product_detail.html' category=product.category slug=product.slug%}">
+                <a href="{%url 'product_detail' category=product.category slug=product.slug%}">
                     <img src="{{ product.photo.url }}" alt="{{ product.name }}">
                     <h4>{{ product.name}}</h4><br>
                     <b>{{ product.price }}</b><br>
@@ -32,12 +32,13 @@
     <div class="product_list">
         {% for product in products %}
             <div class="cart">
-                <a href="{% url 'main/product_detail.html' category=product.category slug=product.slug%}">
+                <a href="{% url 'product_detail' category=product.category slug=product.slug%}">
                     <img src="{{product.photo.url}}" alt="{{ product.name}}">
                     <p>{{ product.name }}</p><br>
                     <b>{{ product.price }}</b><br>
                     <small>{{ product.create_at }}</small>
                 </a>
             </div>
+        {% endfor %}
     </div>
 {% endblock content %}

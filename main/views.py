@@ -3,13 +3,13 @@ from itertools import zip_longest
 from .models import Device, Liquid, Carttridge, ProductImage
 
 def home (request):
-    Device.objects.all()
-    Liquid.objects.all()
-    Carttridge.objects.all()
+    devices = Device.objects.all()
+    liquids = Liquid.objects.all()
+    carttridges = Carttridge.objects.all()
     products = []
 
 
-    for device, liquid, carttridge in zip_longest(device, liquid, carttridge):
+    for device, liquid, carttridge in zip_longest(devices, liquids, carttridges):
         if device and device.stock > 0 :
             device.category = 'device'
             products.append(device)
@@ -17,7 +17,7 @@ def home (request):
             liquid.category = 'liquid'
             products.append(liquid)
         if carttridge and carttridge.stock > 0 :
-            carttridge.category = 'carttridge'
+            carttridge.category = 'carttridg'
             products.append(carttridge)
 
     top_devices = Device.objects.filter(top_product=True)[:5],
@@ -29,13 +29,13 @@ def home (request):
     for l in top_liquids:
         l.category = 'liquid'
     for c in top_carttridges:
-        c.carttridge = 'carttridge'
+        c.category = 'carttridge'
 
     top_products = list(top_devices) + list(top_liquids) + list(top_carttridges)
 
     
     return render(request, 'main/home.html', {'products': products,
-                                              'top_products': top_products})
+                                              'top_products': top_products,})
 
 
 def product_detail (request, category, slug):
