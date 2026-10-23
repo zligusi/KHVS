@@ -13,7 +13,7 @@
     <div class="top_product_list">
         {% for product in top_products %}
             <div class="cart">
-                <a href="{% url 'product_detail' category=product.product_type slug=product.slug %}">
+                <a href="{% url 'product_detail' slug=product.slug %}">
                     <img src="{{ product.photo.url }}" alt="{{ product.name }}">
                     <h4>{{ product.name}}</h4><br>
                     <b>{{ product.price }}</b><br>
@@ -32,7 +32,7 @@
     <div class="product_list">
         {% for product in products %}
             <div class="cart">
-                <a href="{% url 'product_detail' category=product.product_type slug=product.slug %}">
+                <a href="{% url 'product_detail' slug=product.slug %}">
                     <img src="{{product.photo.url}}" alt="{{ product.name}}">
                     <p>{{ product.name }}</p><br>
                     <b>{{ product.price }}</b><br>

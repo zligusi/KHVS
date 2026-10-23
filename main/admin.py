@@ -12,8 +12,8 @@ class CategoryAdmin(admin.ModelAdmin):
 class DeviceAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug', 'category', 'price', 'description', 
                     'create_at', 'update_at', 'stock',
-                    'color', 'power', 'battery_capacity', 'guarantee', 'top_product' 
-                    'volume_liquid', 'taste', 'nicotine_capacity', 'top_product'
+                    'color', 'power', 'battery_capacity', 'guarantee', 'top_product', 
+                    'volume_liquid', 'taste', 'nicotine_capacity', 'top_product',
                     'volume_cartridge', 'resistance', 'compatibility', 'top_product')
     list_filter = ('category', 'create_at', 'power')
     list_editable = ('price', 'stock', 'top_product')

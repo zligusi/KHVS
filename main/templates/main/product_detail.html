@@ -33,7 +33,22 @@
     </div>
 
 
-        <div class="product_list">
-            <!-- add recomendation product-->
+        <div class="top_product_list">
+            {% for product in top product %}
+                <div class="cart">
+                <a href="{% url 'product_detail' slug=product.slug %}">
+                    <img src="{{ product.photo.url }}" alt="{{ product.name }}">
+                    <h4>{{ product.name}}</h4><br>
+                    <b>{{ product.price }}</b><br>
+                    <small>{{ product.created.at }}</small>
+                </a>
+                <div class="bue">
+                    <!-- добавить силку на добавление в корзину-->
+                    <a href="">
+                        <h5>Bue</h5>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
         </div>
 {% endblock content %}

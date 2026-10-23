@@ -1,55 +1,33 @@
 from django.shortcuts import render ,get_object_or_404
 from itertools import zip_longest
-from .models import Device, Liquid, Carttridge, ProductImage
+from .models import Product, ProductImage
+
+def get_top_products() :
+    top_product = Product.objects.filter(top_product=True)[:10]
+    for item in top_product :
+        if item.category == 'Device':
+            product_type = 'Device'
+        elif item.category == 'Liquid':
+            product_type = 'Liquid'
+        elif item.category == 'Cartridge':
+            product_type = 'Cartridge'
 
 def home (request):
-    devices = Device.objects.all()
-    liquids = Liquid.objects.all()
-    carttridges = Carttridge.objects.all()
-    products = []
+    product = Product.objects.all()
 
+    top_product = get_top_products()
+    
+    return render(request, 'main/home.html', {'product': product,
+                                              'top_product': top_product})
 
-    for device, liquid, carttridge in zip_longest(devices, liquids, carttridges):
-        if device and device.stock > 0 :
-            device.product_type = 'device'
-            products.append(device)
-        if liquid and liquid.stock > 0 :
-            liquid.product_type = 'liquid'
-            products.append(liquid)
-        if carttridge and carttridge.stock > 0 :
-            cartproduct_type = 'carttridg'
-            products.append(carttridge)
+def product_detail (request, slug):
+    product = Product.objects.filter(slug=slug)
+    top_products = get_top_products()
 
-    top_devices = Device.objects.filter(top_product=True)[:5]
-    top_liquids = Liquid.objects.filter(top_product=True)[:3]
-    top_carttridges = Carttridge.objects.filter(top_product=True)[:2]
+    return render(request, 'main/product_detail.html', {'top_product': top_products,
+                                                        'product': product})
 
-    for d in top_devices:
-        d.product_type = 'device'
-    for l in top_liquids:
-        l.product_type = 'liquid'
-    for c in top_carttridges:
-        c.product_type= 'carttridge'
-
-    top_products = list(top_devices) + list(top_liquids) + list(top_carttridges)
-
-    return render(request, 'main/home.html', {'products': products,
-                                              'top_products': top_products,})
-
-
-def product_detail (request, category, slug):
-    if category == 'device':
-        product = get_object_or_404(Device, slug=slug)
-    elif category == 'liquid' :
-        product = get_object_or_404(Liquid, slug=slug)
-    elif category == 'carttridge' :
-        product = get_object_or_404(Carttridge, slug=slug)
-
-    images = ProductImage.objects.filter(product=product)
-    return render(request, 'main/product_detail.html', {'product': product, 'images': images, 'category': category})
-# добавить список похожих товарів
 
 
 def about (request):
     return render(request, 'main/about.html')
-
