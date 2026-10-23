@@ -28,6 +28,16 @@ class Product(models.Model):
     update_at = models.DateTimeField(auto_now=True)
     stock = models.PositiveIntegerField(default=0)
     top_product = models.BooleanField(default=False)
+    color = models.CharField(max_length=100)
+    power = models.IntegerField()
+    battery_capacity = models.IntegerField()
+    guarantee = models.DecimalField(max_digits=3, decimal_places=1)
+    volume = models.IntegerField()
+    taste = models.CharField(max_length=100)
+    nicotine_capacity = models.IntegerField()
+    volume = models.DecimalField(max_digits=3, decimal_places=1)
+    resistance = models.DecimalField(max_digits=2, decimal_places=1)
+    compatibility = models.CharField(max_length=120)
     
     
     def save(self, *args, **kwargs):
@@ -38,26 +48,6 @@ class Product(models.Model):
             
     def __str__(self):
         return self.name
-    
-    
-class Device(Product):
-    color = models.CharField(max_length=100)
-    power = models.IntegerField()
-    battery_capacity = models.IntegerField()
-    guarantee = models.DecimalField(max_digits=3, decimal_places=1)
-        
-        
-class Liquid(Product):
-    volume = models.IntegerField()
-    taste = models.CharField(max_length=100)
-    nicotine_capacity = models.IntegerField()
-
-
-class Carttridge(Product):
-    volume = models.DecimalField(max_digits=3, decimal_places=1)
-    resistance = models.DecimalField(max_digits=2, decimal_places=1)
-    compatibility = models.CharField(max_length=120)
-    
     
     
 class ProductImage(models.Model):
