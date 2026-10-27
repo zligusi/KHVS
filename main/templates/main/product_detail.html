@@ -7,26 +7,32 @@
 {% block content %}
     <div class="detail">
         {% for image in images %}
-            <img src="{{ img.image.url }}" alt="{{ product.name }}"><br>
+            {% if product.photo %}
+                <img src="{{ img.image.url }}" alt="{{ product.name }}"><br>
+            {% endif %}
         {% endfor %}
-        <h2>{{ product.name }}</h2><br>
-        <p><b>{{ product.price }}</b>grn.</p><br>
-        <p>Description: </p><br>
-        <p>{{ product.description }}</p><br>
-        <p>Avelible: {{ product.stock }}</p><br>
-        {% if category == "device" %}
-            <p>Color: {{ product.color }}</p><br>
-            <p>Pover: {{ product.pover }}</p><br>
-            <p>Batery capacity:{{ product.battery_capacity }}</p><br>
-            <p>Guarantee: {{ product.guarantee }}</p><br>
-        {% elif category == "liquid" %}
-            <p>Volume: {{ product.volume }}</p><br>
-            <p>Taste: {{ product.taste }}</p><br>
-            <p>Nicotin capacity: {{ product.nicotin_capacity }}</p><br>
-        {% elif category == "carttridge" %}
-            <p>Volume: {{ product.volume }}</p><br>
-            <p>Resistance: {{ product.resistance }}</p><br>
-            <p>Compatibility: {{ product.compatibility }}</p><br>
+
+
+            <h2>{{ product.name }}</h2><br>
+            <p><b>{{ product.price }}</b>grn.</p><br>
+            <p>Description: </p><br>
+            <p>{{ product.description }}</p><br>
+            <p>Avelible: {{ product.stock }}</p><br>
+        
+
+            {% if product.category.name == "Device" %}
+                <p>Color: {{ product.color }}</p><br>
+                <p>Pover: {{ product.power }}</p><br>
+                <p>Batery capacity:{{ product.battery_capacity }}</p><br>
+                <p>Guarantee: {{ product.guarantee }}</p><br>
+            {% elif produc.category.name == "Liquid" %}
+                <p>Volume: {{ product.liquid_volume }}</p><br>
+                <p>Taste: {{ product.taste }}</p><br>
+                <p>Nicotin capacity: {{ product.nicotin_capacity }}</p><br>
+            {% elif product.category.name == "Carttridge" %}
+                <p>Volume: {{ product.cartridge_volume }}</p><br>
+                <p>Resistance: {{ product.resistance }}</p><br>
+                <p>Compatibility: {{ product.compatibility }}</p><br>
 
         <small> Date created: {{ product.created_at }}</small><br>
         {% endif %}
@@ -34,13 +40,15 @@
 
 
         <div class="top_product_list">
-            {% for product in top product %}
+            {% for item  in top_products %}
                 <div class="cart">
-                <a href="{% url 'product_detail' slug=product.slug %}">
-                    <img src="{{ product.photo.url }}" alt="{{ product.name }}">
-                    <h4>{{ product.name}}</h4><br>
-                    <b>{{ product.price }}</b><br>
-                    <small>{{ product.created.at }}</small>
+                <a href="{% url 'product_detail' slug=item.slug %}">
+                    {% if item.photo %}
+                        <img src="{{ item.photo.url }}" alt="{{ product.name }}">
+                    {% endif %}
+                    <h4>{{ item.name}}</h4><br>
+                    <b>{{ item.price }}</b><br>
+                    <small>{{ item.created.at }}</small>
                 </a>
                 <div class="bue">
                     <!-- добавить силку на добавление в корзину-->

@@ -11,13 +11,16 @@
     </div>
 
     <div class="top_product_list">
-        {% for product in top_products %}
+        {% for item in top_products %}
+        
             <div class="cart">
-                <a href="{% url 'product_detail' slug=product.slug %}">
-                    <img src="{{ product.photo.url }}" alt="{{ product.name }}">
-                    <h4>{{ product.name}}</h4><br>
-                    <b>{{ product.price }}</b><br>
-                    <small>{{ product.created.at }}</small>
+                <a href="{% url 'product_detail' slug=item.slug %}">
+                    {% if item.photo %}
+                        <img src="{{ item.photo.url }}" alt="{{ product.name }}">
+                    {% endif %}
+                    <h4>{{ item.name}}</h4><br>
+                    <b>{{ item.price }}</b><br>
+                    <small>{{ item.created.at }}</small>
                 </a>
                 <div class="bue">
                     <!-- добавить силку на добавление в корзину-->
@@ -33,7 +36,9 @@
         {% for product in products %}
             <div class="cart">
                 <a href="{% url 'product_detail' slug=product.slug %}">
-                    <img src="{{product.photo.url}}" alt="{{ product.name}}">
+                    {% if product.photo %}
+                        <img src="{{product.photo.url}}" alt="{{ product.name}}">
+                    {% endif %}
                     <p>{{ product.name }}</p><br>
                     <b>{{ product.price }}</b><br>
                     <small>{{ product.create_at }}</small>
