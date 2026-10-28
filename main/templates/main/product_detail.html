@@ -59,4 +59,25 @@
             </div>
             {% endfor %}
         </div>
+
+        <div class="related_product">
+            {% for item in releted %}
+                <div class="related_cart">
+                    <div class="cart">
+                <a href="{% url 'product_detail' slug=item.slug %}">
+                    {% if item.photo %}
+                        <img src="{{ item.photo.url }}" alt="{{ product.name }}">
+                    {% endif %}
+                    <h4>{{ item.name}}</h4><br>
+                    <b>{{ item.price }}</b><br>
+                    <small>{{ item.created.at }}</small>
+                </a>
+                <div class="bue">
+                    <!-- добавить силку на добавление в корзину-->
+                    <a href="">
+                        <h5>Bue</h5>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
 {% endblock content %}
