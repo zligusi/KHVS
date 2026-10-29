@@ -1,0 +1,19 @@
+{% extends "main/layout.html" %}
+
+{% block title %}
+   Category select
+{% endblock title %}
+
+{% block content %}
+    <div class="category_select">
+        <div class="device">
+            <a href="{% url 'create_product' 'device' %}">Device</a>
+        </div>
+        <div class="liquid">
+            <a href="{% url 'create_product' 'liquid' %}">Liquid</a>
+        </div>
+        <div class="cartridge">
+            <a href="{% url 'create_product' 'cartridge' %}">Cartridge</a>
+        </div>
+    </div>
+{% endblock content %}

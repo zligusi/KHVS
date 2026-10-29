@@ -1,6 +1,9 @@
-from django.shortcuts import render ,get_object_or_404
+from django.shortcuts import render ,get_object_or_404, redirect
 from itertools import zip_longest
 from .models import Product, ProductImage
+from .models import Category
+from .forms import DeviceForm, LiquidForm, CartridgeForm
+from django.http import Http404
 
 def get_top_products(limit_d, limit_l, limit_c):
     devices = Product.objects.filter(top_product=True,
@@ -39,6 +42,35 @@ def product_detail (request, slug):
                                                         'product': product,
                                                         'releted': releted})
 
+
+def category_select(request):
+    return render(request, 'main/create/category_select.html')
+
+
+def create_product (request, category_slug):
+    FORMS_MAP = {
+        'device': DeviceForm,
+        'liquid': LiquidForm,
+        'cartridge': CartridgeForm,
+    }
+
+    form_class = FORMS_MAP.get(category_slug)
+    if form_class is None :
+        raise Http404 
+    if request.method == "POST":
+        form = form_class(request.POST, request.FILES)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.category = get_object_or_404(Category, name__iexact=category_slug)
+            product.save()
+            if request.POST.get('action') == 'save_add':
+                return redirect('category_select')
+            return redirect('home')
+    else:
+        form = form_class()
+
+    return render(request, 'main/create/create_product.html', {'form': form})
+    
 
 
 def about (request):

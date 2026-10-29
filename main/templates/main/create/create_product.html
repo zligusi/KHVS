@@ -1,0 +1,16 @@
+{% extends "main/layout.html" %}
+
+{% block title %}
+  Create Product
+{% endblock title %}
+
+{% block content %}
+    <div class="form">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit" name="action" value="save">Save</button>
+            <button type="submit" name="action" value="save_add">Save and add </button>
+        </form>
+    </div>
+{% endblock content %}

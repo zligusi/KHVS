@@ -64,8 +64,9 @@ class LiquidForm(ProductForm):
     taste = forms.CharField(required=True,
                             label='Taste',
                             max_length=100,
-                            widget=forms.TextInput(attrs={'class':'create_form'}))
-    nicitine_capacity = forms.IntegerField(required=True,
+                            widget=forms.TextInput(attrs={'class':'create_form',
+                                                          'placeholder': 'Cerry'}))
+    nicotine_capacity = forms.IntegerField(required=True,
                                            label='Nicotin capacity',
                                            widget=forms.NumberInput(attrs={'class':'create_form',
                                                                            'placeholder':'50'}))
@@ -77,10 +78,10 @@ class LiquidForm(ProductForm):
 
 
 class CartridgeForm(ProductForm):
-    volme_cartridge = forms.DecimalField(required=True,
+    volume_cartridge = forms.DecimalField(required=True,
                                          label='Volume',
                                          widget=forms.NumberInput(attrs={'class':'create_form',
-                                                                         'placeholder':'30'}))
+                                                                         'placeholder':'3'}))
     resistance = forms.DecimalField(required=True, 
                                     label='Resistance',
                                     widget=forms.NumberInput(attrs={'class':'create_form',
