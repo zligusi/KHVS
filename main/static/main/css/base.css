@@ -1,0 +1,336 @@
+/* Сброс отступов браузера */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Отступ сверху = высота шапки, чтобы контент не уехал под неё */
+body {
+  padding-top: 70px;
+}
+
+/* Шапка зафиксирована сверху. position: relative не нужен,
+   fixed сам создаёт систему координат для absolute-детей */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background-color: #242424;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* header-right прижат вправо */
+  padding: 0 20px;
+}
+
+/* Общий плавный переход для всего интерактива */
+.search,
+.basket,
+.user_login a {
+  transition: transform 0.2s ease, background-color 0.2s ease,
+    box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* Единое увеличение на 5% при наведении.
+   У .search свой transform для центрирования, поэтому он ниже отдельно */
+.basket:hover,
+.user_login a:hover {
+  transform: scale(1.05);
+}
+
+/* Поиск строго по центру шапки: absolute вырывает его из потока,
+   left 50% двигает левый край в середину, translateX(-50%) сдвигает
+   назад на половину собственной ширины */
+.search {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  border: 2px solid #ff7a00;
+  border-radius: 8px;
+  background-color: #222;
+}
+
+/* Увеличение поиска: сохраняем translate, иначе он съедет с центра */
+.search:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+.search i {
+  color: #ff7a00;
+}
+
+.search input {
+  border: none;
+  background: transparent;
+  color: #fff;
+  outline: none;
+  min-width: 220px;
+}
+
+.search input::placeholder {
+  color: #888;
+}
+
+.search:focus-within {
+  box-shadow: 0 0 8px rgba(255, 122, 0, 0.6);
+}
+
+/* Правая часть: всё в один ряд слева направо: корзина, Login, Register */
+.header_right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Корзина: компактная кнопка, текст внутри скрыт, остаётся только иконка.
+   overflow: hidden не даёт ничему вылезать за рамку */
+.basket {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 2px solid #ff7a00;
+  border-radius: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  font-size: 0; /* прячет любой текст рядом с иконкой */
+  color: transparent;
+}
+
+.basket i {
+  color: #ff7a00;
+  font-size: 20px; /* возвращаем размер только иконке */
+  line-height: 1;
+}
+
+.basket:hover {
+  background-color: rgba(255, 122, 0, 0.15);
+}
+
+/* Стилизуем сами div login и register как кнопки.
+   Так не важно, что внутри: a, i или просто текст */
+.login,
+.register {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: 2px solid #ff7a00;
+  border-radius: 8px;
+  color: #ff7a00;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+/* Всё, что внутри (ссылка, иконка), наследует цвет и убирает подчёркивание */
+.login *,
+.register * {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.login:hover,
+.register:hover {
+  background-color: #ff7a00;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+/* goood 
+
+/* ===== Боковая панель: узкая, при наведении выезжает ===== */
+
+/* В обычном состоянии 60px: видны только иконки.
+   При наведении на панель ширина растёт до 240px и показываются подписи.
+   overflow hidden прячет текст, пока панель узкая */
+aside {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 60px;
+  height: calc(100vh - 70px);
+  background-color: #242424;
+  border-right: 1px solid #333;
+  padding: 10px 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  transition: width 0.25s ease;
+  z-index: 900; /* ниже шапки (1000), но выше контента */
+}
+
+aside:hover {
+  width: 300px;
+}
+
+/* Контент не сдвигаем при выезде: панель наезжает поверх него (overlay),
+   поэтому отступ у main равен ширине узкой панели */
+main {
+  margin-left: 60px;
+}
+
+aside ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Пункт: рамка без левой стороны, чтобы иконка вплотную к краю экрана */
+aside ul li {
+  width: 100%;
+  border: 2px solid #ff7a00;
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+  transition: background-color 0.2s ease;
+}
+
+aside ul li:hover {
+  background-color: rgba(255, 122, 0, 0.12);
+}
+
+/* Ссылка и summary на всю ширину, иконка слева, текст за ней.
+   Увеличение scale для боковой панели убрали: оно двигало края и дёргало ширину */
+aside ul li a,
+aside ul li a:link,
+aside ul li a:visited,
+aside ul li summary {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  gap: 12px;
+  padding: 10px 0 10px 14px; /* иконка у левого края */
+  font-size: 14px;
+  color: #e0e0e0 !important;
+  text-decoration: none !important;
+  white-space: nowrap; /* текст в одну строку, лишнее прячет overflow */
+  list-style: none;
+  cursor: pointer;
+}
+
+aside ul li summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Иконка крупная, фиксированной ширины: в узком режиме она всегда видна */
+aside ul li i {
+  font-size: 22px;
+  width: 26px;
+  flex-shrink: 0;
+  text-align: center;
+  color: #ff7a00;
+}
+
+/* Текст подписи: скрыт в узком режиме, плавно появляется при наведении */
+aside ul li a span,
+aside ul li summary span {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+aside:hover ul li a span,
+aside:hover ul li summary span {
+  opacity: 1;
+}
+
+/* Вложенный список в details: контакты, соцсети, номера */
+aside details ul {
+  margin-top: 6px;
+  padding-left: 0;
+}
+
+aside details ul li {
+  border: none;
+}
+
+aside details ul li a {
+  font-size: 13px;
+  padding-left: 14px;
+}
+
+aside ul li a:hover,
+aside ul li summary:hover {
+  color: #fff !important;
+}
+/* Ссылка-обёртка: на всю ширину, без подчёркивания и синего цвета, курсор-рука */
+aside ul a,
+aside ul a:link,
+aside ul a:visited {
+  display: block;
+  width: 100%;
+  color: #e0e0e0 !important;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
+/* li внутри ссылки: рамка, иконка слева, текст за ней */
+aside ul a li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 0 10px 14px;
+  border: 2px solid #ff7a00;
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+  color: inherit;
+  font-size: 14px;
+  white-space: nowrap;
+  list-style: none;
+  transition: background-color 0.2s ease;
+}
+
+/* Наведение на ссылку подсвечивает вложенный li */
+aside ul a:hover li {
+  background-color: rgba(255, 122, 0, 0.12);
+  color: #fff;
+}
+
+/* Иконка внутри li */
+aside ul a li i {
+  font-size: 22px;
+  width: 26px;
+  flex-shrink: 0;
+  text-align: center;
+  color: #ff7a00;
+}
+/* Пункт: иконка сверху, подпись под ней, всё по левому краю */
+aside ul a li {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 8px 0 8px 12px;
+  white-space: normal; /* разрешаем перенос строк */
+  overflow: hidden;
+}
+
+/* Иконка меньше */
+aside ul a li i {
+  font-size: 18px;
+  width: 22px;
+  text-align: left;
+}
+
+/* Подпись мелким шрифтом, длинные слова переносятся, а не режутся */
+aside ul a li span {
+  font-size: 12px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+
