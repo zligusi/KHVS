@@ -5,11 +5,12 @@
 {% endblock title %}
 
 {% block content %}
-    <div class="welcome">
-        <p>Welcome to  Kharkiv vape shop. Here you'll find everything 
-            you need for pod systems including the systems themselves.</p>
-    </div>
-
+    {% if not user.is_authenticated %}
+        <div class="welcome">
+            <p>Welcome to  Kharkiv vape shop. Here you'll find everything 
+               you need for pod systems including the systems themselves.</p>
+        </div>
+    {% endif %}
     <div class="top_product_list">
         {% for item in top_products %}
         
@@ -22,10 +23,11 @@
                     <b>{{ item.price }}grn.</b><br>
                     <small>{{ item.created_at }}</small>
                 </a>
-                <div class="bue">
+                <div class="buy">
                     <!-- добавить силку на добавление в корзину-->
                     <a href="">
-                        <h5>Bue</h5>
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <h5>Buy</h5>
                     </a>
                 </div>
             </div>
@@ -43,6 +45,13 @@
                     <b>{{ product.price }}</b><br>
                     <small>{{ product.create_at }}</small>
                 </a>
+                <div class="buy">
+                    <!-- добавить силку на добавление в корзину-->
+                    <a href="">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <h5>Buy</h5>
+                    </a>
+                </div>
             </div>
         {% endfor %}
     </div>

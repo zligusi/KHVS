@@ -334,3 +334,491 @@ aside ul a li span {
 }
 
 
+/* ===== Фон страницы ===== */
+
+/* Ставим и на html, и на body, чтобы белого не осталось нигде */
+html,
+body {
+  background-color: #181818 !important;
+  min-height: 100vh;
+}
+
+/* ===== Страница about ===== */
+
+.about {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 24px;
+  background-color: #242424;
+  border: 2px solid #ff7a00;
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.about h1,
+.about h2 {
+  color: #ff7a00;
+  margin-bottom: 12px;
+}
+
+/* ===== Home: приветствие для гостей ===== */
+
+/* display block и width 100% не дают блоку сжаться,
+   box-sizing считает padding внутри ширины */
+.welcome {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  margin: 20px 0;
+  padding: 32px 36px;
+  background: linear-gradient(135deg, #2c2c2c, #1f1f1f);
+  border-left: 6px solid #ff7a00;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+}
+
+/* Текст приветствия белый, крупный, с переносом строк */
+.welcome p {
+  margin: 0;
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 1.3;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #fff;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* ===== Сетки товаров: ровно 5 колонок ===== */
+
+/* minmax(0, 1fr) не даёт карточкам раздуваться шире колонки */
+.top_product_list,
+.product_list {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Ссылки-обёртки карточек сами становятся ячейками сетки */
+.top_product_list > a,
+.product_list > a {
+  display: block !important;
+  min-width: 0;
+}
+
+/* Топ-продукты: тёмный дуб с золотистым отблеском и золотая рамка.
+   Цвет не совпадает ни с фоном страницы, ни с боковой панелью,
+   поэтому блок не сливается с соседями. 10 карточек лягут в 2 ряда по 5 */
+.top_product_list {
+  margin: 30px 0 50px 0;
+  padding: 24px;
+  background: linear-gradient(135deg, #4a3319, #2e1f0e 60%, #3d2c12) !important;
+  border: 2px solid #b8892e;
+  border-radius: 12px;
+  box-shadow: inset 0 0 40px rgba(212, 160, 60, 0.12);
+}
+
+/* Обычный список: цвет страницы, отступ снизу */
+.product_list {
+  margin: 0 0 30px 0;
+  padding: 24px 0;
+  background-color: transparent;
+}
+
+/* ===== Карточка товара: общая для обоих блоков ===== */
+
+/* Нейтральная серая рамка, оранжевый только у кнопки buy */
+.cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+  padding: 12px;
+  background-color: #242424;
+  border: 1px solid #3a3a3a;
+  border-radius: 8px;
+  color: #e0e0e0;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cart:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+}
+
+/* Картинки небольшие: фиксированная высота, object-fit обрезает по краям,
+   а не растягивает. Бьём по любой картинке в блоках товаров */
+.top_product_list img,
+.product_list img,
+.cart img {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 140px !important;
+  object-fit: cover !important;
+  border-radius: 6px;
+}
+
+/* Название товара */
+.cart .product_name {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Цена и дата добавления в теге small */
+.cart small {
+  font-size: 12px;
+  color: #aaa;
+}
+
+/* ===== Ссылки-обёртки: никакого синего и подчёркивания ===== */
+
+.top_product_list a,
+.top_product_list a:link,
+.top_product_list a:visited,
+.top_product_list a:hover,
+.product_list a,
+.product_list a:link,
+.product_list a:visited,
+.product_list a:hover {
+  color: #e0e0e0 !important;
+  text-decoration: none !important;
+}
+
+.top_product_list a *,
+.product_list a * {
+  text-decoration: none !important;
+}
+
+/* В золотом блоке текст тёплого светлого оттенка */
+.top_product_list a,
+.top_product_list a:link,
+.top_product_list a:visited,
+.top_product_list a:hover {
+  color: #f0e6d2 !important;
+}
+
+.top_product_list a small {
+  color: #c9b78f !important;
+}
+
+.product_list a small {
+  color: #aaa !important;
+}
+
+/* ===== Кнопка buy: единственный оранжевый элемент в карточке ===== */
+
+/* Рамка и скругление прямо на div buy, отдельная обёртка не нужна */
+.buy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: auto; /* прижимает кнопку к низу карточки */
+  padding: 8px 16px;
+  border: 2px solid #ff7a00;
+  border-radius: 8px;
+  background-color: transparent;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+/* h5 внутри кнопки: крупный, оранжевый */
+.top_product_list a .buy h5,
+.product_list a .buy h5 {
+  margin: 0;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #ff7a00 !important;
+}
+
+.buy:hover {
+  background-color: #ff7a00;
+  transform: scale(1.05);
+}
+
+.top_product_list a .buy:hover h5,
+.product_list a .buy:hover h5 {
+  color: #181818 !important;
+}
+
+/* Номер в одну строку: перенос запрещён везде, включая flex-контейнер */
+aside details ul li,
+aside details ul li a,
+aside details ul a li {
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
+  width: max-content; /* ширина по самому длинному тексту, а не по узкой колонке */
+  min-width: 100%;
+}
+
+/* Сам раскрытый список разрешаем шире панели без обрезки */
+aside details ul {
+  width: max-content;
+  min-width: 100%;
+}
+/* Контент не уезжает под боковую панель (60px) + зазор */
+body {
+  padding-left: 80px !important;
+  padding-right: 20px;
+}
+
+/* Убираем старый отступ у main, чтобы он не сложился с этим */
+main {
+  margin-left: 0 !important;
+}
+
+/* Кнопка buy: оранжевая рамка со скруглением.
+   Цвет текста не задаю, остаётся прежним */
+.buy {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: auto;
+  padding: 8px 16px !important;
+  border: 2px solid #ff7a00 !important;
+  border-radius: 8px !important;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.buy:hover {
+  background-color: rgba(255, 122, 0, 0.15);
+  transform: scale(1.05);
+}
+
+.buy i {
+  font-size: 18px;
+  color: #ff7a00;
+  margin-right: 8px;
+}
+.buy {
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 8px;
+}
+
+.buy i {
+  margin: 0;
+}
+
+.buy h5 {
+  margin: 0;
+}
+
+/* Ссылка внутри кнопки: на всю ширину, иконка и надпись в одну строку */
+.buy a {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  text-decoration: none !important;
+}
+
+/* Иконка: оранжевая, не сжимается */
+.buy a i {
+  font-size: 18px;
+  color: #ff7a00;
+  flex-shrink: 0;
+}
+
+/* h5 без стандартных отступов заголовка и без подчёркивания */
+.buy a h5 {
+  margin: 0;
+  color: #ff7a00 !important;
+  text-decoration: none !important;
+}
+/* Три блока одинаковые: общий фон, оранжевая рамка со скруглением */
+.device,
+.liquid,
+.cartridge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #242424;
+  border: 3px solid #ff7a00;
+  border-radius: 16px;
+  transition: transform 0.2s ease, background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Наведение: заливка чуть светлее, свечение по рамке и лёгкое увеличение */
+.device:hover,
+.liquid:hover,
+.cartridge:hover {
+  background-color: #2e2e2e;
+  transform: scale(1.03);
+  box-shadow: 0 0 18px rgba(255, 122, 0, 0.45);
+}
+/* Контейнер: три равные колонки на всю ширину и высоту экрана */
+.category_select {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 20px;
+  width: 100%;
+  height: calc(100vh - 110px); /* высота окна минус шапка и отступы */
+  box-sizing: border-box;
+}
+
+/* Блоки: на всю ячейку, оранжевая рамка со скруглением */
+.category_select > div {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-color: #242424;
+  border: 3px solid #ff7a00;
+  border-radius: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.category_select > div:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 18px rgba(255, 122, 0, 0.45);
+}
+
+/* Ссылка растянута на весь блок, крупный текст, без синего и подчёркивания */
+.category_select a,
+.category_select a:link,
+.category_select a:visited {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 40px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #e0e0e0 !important;
+  text-decoration: none !important;
+}
+
+.category_select > div:hover a {
+  color: #ff7a00 !important;
+}
+/* ===== Форма создания ===== */
+
+/* Обёртка: по центру, тёмная плашка */
+.form {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 24px;
+  background-color: #242424;
+  border-radius: 12px;
+}
+
+/* Названия полей: белые, крупные, с отступом от поля */
+.form label {
+  display: block;
+  margin: 14px 0 6px 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* Все поля с классом create_form: оранжевая рамка со скруглением,
+   тёмный фон, белый текст. Подходит и для input, и для select, и для textarea */
+.create_form {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  background-color: #181818;
+  border: 2px solid #ff7a00;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 15px;
+  outline: none;
+  box-sizing: border-box;
+  transition: box-shadow 0.2s ease;
+}
+
+/* Активное поле подсвечивается свечением */
+.create_form:focus {
+  box-shadow: 0 0 8px rgba(255, 122, 0, 0.6);
+}
+
+/* Кнопки Save и Save and add: залиты оранжевым, текст белый и жирный.
+   Две кнопки в ряд, с отступом между ними */
+.form button[type=«submit»] {
+  margin-top: 20px;
+  margin-right: 10px;
+  padding: 12px 28px;
+  background-color: #ff7a00;
+  border: 2px solid #ff7a00;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.form button[type=«submit»]:hover {
+  background-color: #ff9d3d;
+  border-color: #ff9d3d;
+  transform: scale(1.05);
+}
+
+/* Подсказки и ошибки Django */
+.form .helptext {
+  color: #aaa;
+  font-size: 13px;
+}
+
+.form .errorlist {
+  color: #ff5a5a;
+  list-style: none;
+}
+
+/* Кнопки формы: оранжевая заливка, скругление, белый жирный текст.
+   Селектор по тегу и типу, без привязки к родителю.
+   !important перебивает стандартный вид браузера */
+button[type=«submit»],
+input[type=«submit»] {
+  background-color: #ff7a00 !important;
+  border: 2px solid #ff7a00 !important;
+  border-radius: 8px !important;
+  color: #fff !important;
+  padding: 12px 28px !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+button:hover,
+button[type=«submit»]:hover,
+input[type=«submit»]:hover {
+  background-color: #ff9d3d !important;
+  border-color: #ff9d3d !important;
+  transform: scale(1.05);
+}
+button,
+button[type=«submit»] {
+  background-color: #ff7a00 !important;
+  border: 2px solid #ff7a00 !important;
+  border-radius: 8px !important;
+  color: #fff !important;
+  padding: 12px 28px !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+  cursor: pointer;
+}
+
+button:hover,
+button[type=«submit»]:hover {
+  background-color: #ff9d3d !important;
+  border-color: #ff9d3d !important;
+}

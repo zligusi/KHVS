@@ -31,7 +31,6 @@
             <div class="register">
                 <a href=""><i class="fa-solid fa-user-plus"></i>Register</a>
             </div>
-            </div>
         </div>
         
     </header>
@@ -39,15 +38,18 @@
     <ul>
             <a href="{% url 'home' %}"><li><i class="fa-solid fa-house"></i><span>Home</span></li></a>
             <a href="{% url 'about' %}"><li><i class="fa-solid fa-circle-info"></i><span>About</span></li></a>
+            {% if user.is_staff %}
+                    <a href="{% url 'category_select' %}"><li><i class="fa-solid fa-square-plus"></i><span>Create</span></li></a>
+            {% endif %}
             <a href=""><li><span>Top product</span></li></a>
             <li><details><summary><i class="fa-solid fa-address-block">Contact</summary>
                 <ul>
                     <a href="https://t.me/@Gufjvuk"><li><i class="fa-brands fa-telegram">Telegram</i></a></li>
                     <a href=""><li><i class="fa-brands fa-whatsapp">WhatsApp</i></a></li>
                     <a href=""><li><i class="fa-brands fa-viber">Viber</i></a></li><br>
-                    <a href=""><li><i class="fa-solid fa-phone">"+380(97)-000-00-00"</i></li></a>
-                    <a href=""><li><i class="fa-solid fa-phone">"+380(73)-000-00-00"</i></li></a>
-                    <a href=""><li><i class="fa-solid fa-phone">"+380(50)-000-00-00"</i></li></a>
+                    <li><i class="fa-solid fa-phone">"+380(97)-000-00-00"</i></li>
+                    <li><i class="fa-solid fa-phone">"+380(73)-000-00-00"</i></li>
+                    <li><i class="fa-solid fa-phone">"+380(50)-000-00-00"</i></li>
                 </ul>
             </details></li>
         </ul>
