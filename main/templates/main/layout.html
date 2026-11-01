@@ -41,7 +41,7 @@
             {% if user.is_staff %}
                     <a href="{% url 'category_select' %}"><li><i class="fa-solid fa-square-plus"></i><span>Create</span></li></a>
             {% endif %}
-            <a href=""><li><span>Top product</span></li></a>
+            <a href="{% url 'favorite_products' %}"><li><span>Top product</span></li></a>
             <li><details><summary><i class="fa-solid fa-address-block">Contact</summary>
                 <ul>
                     <a href="https://t.me/@Gufjvuk"><li><i class="fa-brands fa-telegram">Telegram</i></a></li>

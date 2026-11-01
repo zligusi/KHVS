@@ -72,6 +72,10 @@ def create_product (request, category_slug):
     return render(request, 'main/create/create_product.html', {'form': form})
     
 
+def favorite_products (request):
+    top_products = Product.objects.filter(top_product=True)
+    return render(request, 'main/favorite_products.html', {'top_products':top_products})
+
 
 def about (request):
     return render(request, 'main/about.html')

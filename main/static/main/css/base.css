@@ -822,3 +822,134 @@ button[type=«submit»]:hover {
   background-color: #ff9d3d !important;
   border-color: #ff9d3d !important;
 }
+/* ===== Характеристики: один общий блок ===== */
+
+/* Фон тёмно-синеватый, чтобы отличался и от описания (#242424), и от страницы.
+   Рамка тонкая, оранжевый оставляем только на заголовке */
+.characteristics {
+  margin: 24px 0;
+  padding: 20px 24px;
+  background-color: #1f2630;
+  border: 1px solid #34404f;
+  border-radius: 12px;
+  color: #fff;
+}
+
+/* Заголовок «Характеристики»: оранжевый, крупный */
+.characteristics h2,
+.characteristics h3,
+.characteristics_title {
+  margin: 0 0 14px 0;
+  font-size: 22px;
+  font-weight: bold;
+  color: #ff7a00;
+}
+
+/* Весь текст внутри блока белый, с хорошим межстрочным интервалом */
+.characteristics,
+.characteristics * {
+  color: #fff;
+  line-height: 1.6;
+}
+
+/* Заголовок перебивает общий белый цвет, потому что стоит ниже по специфичности */
+.characteristics h2,
+.characteristics h3,
+.characteristics .characteristics_title {
+  color: #ff7a00;
+}
+
+/* Строки: название слева, значение справа, тонкая линия между ними */
+.characteristics li,
+.characteristics p {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid #34404f;
+  list-style: none;
+}
+
+.characteristics li:last-child,
+.characteristics p:last-child {
+  border-bottom: none;
+}
+/* Весь текст в detail и в description белый, перебивает любые другие цвета */
+.detail,
+.detail *,
+.description,
+.description * {
+  color: #fff !important;
+}
+
+/* Заголовки блоков остаются оранжевыми */
+.description .description_title,
+.detail .description_title,
+.detail .characteristics h2,
+.detail .characteristics h3,
+.detail .characteristics_title {
+  color: #ff7a00 !important;
+}
+/* ===== Описание: отдельная плашка, как у характеристик, но другого цвета ===== */
+
+.description {
+  margin: 24px 0;
+  padding: 20px 24px;
+  background-color: #2a1d10; /* тёмно-коричневый, чтобы отличался от синеватых характеристик */
+  border: 2px solid #ff7a00;
+  border-radius: 12px;
+}
+
+.description,
+.description * {
+  color: #fff !important;
+}
+
+/* Заголовок «Описание»: оранжевый, с линией под ним */
+.description .description_title {
+  margin: 0 0 12px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #1f2630;
+  font-size: 22px;
+  font-weight: bold;
+  color: #ff7a00 !important;
+}
+
+.description .description_text {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+/* ===== Описание: отдельная плашка, цвет как у характеристик ===== */
+
+.description {
+  margin: 24px 0;
+  padding: 20px 24px;
+  background-color: #1f2630;
+  border: 1px solid #34404f;
+  border-radius: 12px;
+}
+
+.description,
+.description * {
+  color: #fff !important;
+}
+
+/* Заголовок «Описание»: оранжевый, с тонкой линией под ним */
+.description .description_title {
+  margin: 0 0 12px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #34404f;
+  font-size: 22px;
+  font-weight: bold;
+  color: #ff7a00 !important;
+}
+
+.description .description_text {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  white-space: pre-line;
+}

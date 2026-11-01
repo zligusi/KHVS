@@ -1,0 +1,28 @@
+{% extends "main/layout.html" %}
+
+{% block title %}
+    Kharkiv Vape Shop
+{% endblock title %}
+
+{% block content %}
+    <div class="top_product_list">
+            {% for item  in top_products %}
+                <div class="cart">
+                <a href="{% url 'product_detail' slug=item.slug %}">
+                    {% if item.photo %}
+                        <img src="{{ item.photo.url }}" alt="{{ product.name }}">
+                    {% endif %}
+                    <h4>{{ item.name}}</h4><br>
+                    <b>{{ item.price }}</b><br>
+                    <small>{{ item.created.at }}</small>
+                </a>
+                <div class="bue">
+                    <!-- добавить силку на добавление в корзину-->
+                    <a href="">
+                        <h5>Bue</h5>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+{% endblock %}

@@ -15,24 +15,27 @@
 
             <h2>{{ product.name }}</h2><br>
             <p><b>{{ product.price }}</b>grn.</p><br>
-            <p>Description: </p><br>
+            <div class="description"><p>Description: </p><br>
             <p>{{ product.description }}</p><br>
+            </div>
             <p>Avelible: {{ product.stock }}</p><br>
         
-
+            <div class="characteristics">
+            <h3>Characteristics :</h3>
             {% if product.category.name == "Device" %}
                 <p>Color: {{ product.color }}</p><br>
                 <p>Pover: {{ product.power }}</p><br>
                 <p>Batery capacity:{{ product.battery_capacity }}</p><br>
                 <p>Guarantee: {{ product.guarantee }}</p><br>
-            {% elif produc.category.name == "Liquid" %}
+            {% elif product.category.name == "Liquid" %}
                 <p>Volume: {{ product.liquid_volume }}</p><br>
                 <p>Taste: {{ product.taste }}</p><br>
                 <p>Nicotin capacity: {{ product.nicotin_capacity }}</p><br>
-            {% elif product.category.name == "Carttridge" %}
+            {% elif product.category.name == "Cartridge" %}
                 <p>Volume: {{ product.cartridge_volume }}</p><br>
                 <p>Resistance: {{ product.resistance }}</p><br>
                 <p>Compatibility: {{ product.compatibility }}</p><br>
+            </div>
 
         <small> Date created: {{ product.created_at }}</small><br>
         {% endif %}
