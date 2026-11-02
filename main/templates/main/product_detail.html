@@ -8,7 +8,7 @@
     <div class="detail">
         {% for image in images %}
             {% if product.photo %}
-                <img src="{{ img.image.url }}" alt="{{ product.name }}"><br>
+                <img src="{{ image.image.url }}" alt="{{ product.name }}"><br>
             {% endif %}
         {% endfor %}
 

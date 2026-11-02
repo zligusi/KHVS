@@ -25,11 +25,23 @@ def get_similar_product(product, limit):
 
 
 def home (request):
-    product = Product.objects.all()
+    products = Product.objects.all()
 
     top_product = get_top_products(limit_d=5, limit_l=3, limit_c=2)
-    
-    return render(request, 'main/home.html', {'products': product,
+
+    filter_cetegory = request.GET.getlist('filter_cetegory')
+    price_min = request.GET.get('price_min')
+    price_max = request.GET.get('price_max')
+
+    if filter_cetegory :
+        products = Product.objects.filter(category__name__in =filter_cetegory)
+    if price_min :
+        products = Product.objects.filter(price__gte=price_min)
+    if price_max :
+        products = Product.objects.filter(price__lte=price_max)
+
+        
+    return render(request, 'main/home.html', {'products': products,
                                               'top_products': top_product})
 
 

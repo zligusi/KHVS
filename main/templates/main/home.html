@@ -11,6 +11,33 @@
                you need for pod systems including the systems themselves.</p>
         </div>
     {% endif %}
+        <div class="filter">
+            <form>
+            <div class="filter_cetegory">
+                <details><summary><i class="fa-solid fa-layer-group"></i>  Category</summary>
+                    <input type="checkbox" name="filter_cetegory" value="Device" id="1">
+                    <label for="1"><i class="fa-solid fa-smoking"></i> Device</label><br>
+                    <input type="checkbox" name="filter_cetegory" value="Liquid" id="2">  
+                    <label for="2"><i class="fa-solid fa-flask"></i> Liquid</label><br>  
+                    <input type="checkbox" name="filter_cetegory" value="Carttridge" id="3">
+                    <label for="3"><i class="fa-solid fa-sd-card"></i>Carttridge</label>
+                </details>
+            </div>
+            <div class="filter_price">
+                <div class="min_price">
+                    <label for="4">Min price:</label>
+                    <input type="number" name="price_min" min="0" id="4">
+                </div>
+                <div class="max_price">
+                    <label for="5">Max price:</label>
+                    <input type="number" name="price_max" min="0" id="5">
+                </div>
+            </div>
+            <div class="apply_button">
+                <button type="submit">Apply</button>
+            </div>
+            </form>
+        </div>
     <div class="top_product_list">
         {% for item in top_products %}
         
