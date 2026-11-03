@@ -50,9 +50,15 @@ def product_detail (request, slug):
     top_products = get_top_products(limit_d=3, limit_l=1, limit_c=1)
     releted = get_similar_product(product, limit=5)
 
+    if product.group :
+        group_products = Product.objects.filter(group=product.group, stock__gt=0)
+    else:
+        group_products = []
+
     return render(request, 'main/product_detail.html', {'top_products': top_products,
                                                         'product': product,
-                                                        'releted': releted})
+                                                        'releted': releted,
+                                                        'group_products': group_products})
 
 
 def category_select(request):

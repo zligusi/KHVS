@@ -1335,3 +1335,134 @@ input[type=«checkbox»][name=«filter_category»]:checked::after {
     font-size: 13px;
     color: #e8833a;
 }
+/* -——— Основной блок выбора вариантов -——— */
+.product_selector {
+    margin: 18px 0;
+}
+
+/* Три селектора внутри: небольшой отступ друг от друга */
+.color_selector,
+.color_select,
+.taste_selector,
+.carttridge_selector {
+    margin: 10px 0;
+}
+
+/* Все ссылки: белый текст, без подчёркивания, не синие */
+.color_selector a,
+.color_select a,
+.taste_selector a,
+.carttridge_selector a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+}
+
+.color_selector a:visited,
+.color_select a:visited,
+.taste_selector a:visited,
+.carttridge_selector a:visited,
+.color_selector a:hover,
+.color_select a:hover,
+.taste_selector a:hover,
+.carttridge_selector a:hover {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* Цвет: кружок. Заливка приходит из style в HTML */
+.color_dote {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    flex-shrink: 0;
+}
+
+.color_name {
+    color: #ffffff;
+}
+
+/* Вкус и картридж: оранжевая скруглённая обводка */
+.taste_selector a,
+.carttridge_selector a {
+    border: 2px solid #e8833a;
+    border-radius: 10px;
+}
+
+.taste,
+.carttridge {
+    color: #ffffff;
+}
+/* ============================================
+   Селекторы вариантов товара: цвет, вкус, картридж
+   ============================================ */
+
+/* Основной блок: верхний отступ средний, нижний больше */
+.product_selector {
+    margin: 30px 0 60px !important;
+}
+
+/* Три селектора внутри: небольшой отступ друг от друга */
+.color_select,
+.color_selector,
+.taste_selector,
+.carttridge_selector {
+    margin: 12px 0 !important;
+}
+
+/* Ссылка = один общий элемент с оранжевой скруглённой обводкой */
+.color_select a,
+.color_selector a,
+.taste_selector a,
+.carttridge_selector a {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    border: 2px solid #e8833a !important;
+    border-radius: 10px !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+}
+
+.color_select a:visited,
+.color_selector a:visited,
+.taste_selector a:visited,
+.carttridge_selector a:visited,
+.color_select a:hover,
+.color_selector a:hover,
+.taste_selector a:hover,
+.carttridge_selector a:hover {
+    color: #ffffff !important;
+    text-decoration: none !important;
+}
+
+/* Кружок цвета: заливка приходит из style в HTML */
+.color_dote {
+    display: inline-block !important;
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px;
+    border-radius: 50% !important;
+    border: none !important;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35);
+    flex-shrink: 0;
+}
+
+/* Текст внутри */
+.color_name,
+.taste,
+.carttridge {
+  color: #ffffff !important;
+  text-decoration: none !important;
+}

@@ -13,8 +13,18 @@ class Category(models.Model):
         
         
     def __str__(self):
-        return self.name
-    
+            return self.name
+
+class ProductGroupe(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+            if not self.slug:
+                self.slug = slugify(self.name)
+            super().save(*args, **kwargs)
+    def __str__(self):
+            return self.name
     
 class Product(models.Model):
     name = models.CharField(max_length=100, db_index=True)
@@ -29,6 +39,7 @@ class Product(models.Model):
     stock = models.PositiveIntegerField(default=0)
     top_product = models.BooleanField(default=False)
     color = models.CharField(max_length=100, blank=True)
+    color_code = models.CharField(max_length=7, blank=True)
     power = models.IntegerField( blank=True, null=True)
     battery_capacity = models.IntegerField( blank=True, null=True)
     guarantee = models.DecimalField(max_digits=3, decimal_places=1, blank=True, null=True)
@@ -38,7 +49,7 @@ class Product(models.Model):
     volume_cartridge = models.DecimalField(max_digits=3, decimal_places=1, null=True, blank=True)
     resistance = models.DecimalField(max_digits=2, decimal_places=1, blank=True, null=True)
     compatibility = models.CharField(max_length=120,  blank=True)
-    
+    group = models.ForeignKey(ProductGroupe, on_delete=models.SET_NULL, blank=True, null=True, related_name='products')
     
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -48,6 +59,8 @@ class Product(models.Model):
             
     def __str__(self):
         return self.name
+
+
     
     
 class ProductImage(models.Model):

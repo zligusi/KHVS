@@ -13,6 +13,8 @@
     <title>{% block title %}{% endblock title %}</title>
 </head>
 <body>
+
+ <!-- Верхня панель управління -->
     <header>
        <div class="search">
             <i class="fa-solid fa-magnifying-glass"></i>
@@ -32,8 +34,9 @@
                 <a href=""><i class="fa-solid fa-user-plus"></i>Register</a>
             </div>
         </div>
-        
-    </header>
+        </header>
+
+<!-- Бокова панель управління -->
     <aside>
     <ul>
             <a href="{% url 'home' %}"><li><i class="fa-solid fa-house"></i><span>Home</span></li></a>
@@ -57,6 +60,8 @@
     </aside>
 
     {% block content %}{% endblock content %}
+
+ <!-- скріпт для згортання бокової панелі -->
     <script>
   // Находим боковую панель
   const sidebar = document.querySelector('aside');

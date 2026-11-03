@@ -5,7 +5,9 @@
 {% endblock title %}
 
 {% block content %}
+<!-- детальна інформація про товар-->
     <div class="detail">
+        <!-- цикл виведення фото -->
         {% for image in images %}
             {% if product.photo %}
                 <img src="{{ image.image.url }}" alt="{{ product.name }}"><br>
@@ -15,6 +17,47 @@
 
             <h2>{{ product.name }}</h2><br>
             <p><b>{{ product.price }}</b>grn.</p><br>
+
+<!--Вивід товару однакової серії -->
+    <!--Перевірка чи має товар групу  -->
+            {% if group_products %}
+                <div class="product_selector">
+                    {% for item in group_products  %}
+                    <!-- Селектор кольору  -->
+                        {% if item.color %}
+                            <div class="color_selector">
+                                <a href="{% url 'product_detail' slug=item.slug %}">
+                                        <span  class="color_dote" style="background-color: {{ item.color_code }};"></span>
+                                        <span class="color_name">{{ item.color }}</span>
+                                </a>
+                            </div>
+                        {% endif %}
+                    
+                    <!-- Селектор смаку  -->
+                        {% if item.taste %}
+                            <div class="taste_selector">
+                                <a href="{% url 'product_detail' slug=item.slug %}">
+                                    <span class="taste">{{ item.taste}}</span>
+                                </a>
+                            </div>
+                        {% endif %}
+                    <!-- Селектор об'єму і супротиву -->
+                        {% if item.volume_cartridge %}
+                            {% if item.resistance%}
+                                <div class="carttridge_selector">
+                                    <a href="{% url 'product_detail' slug=item.slug %}">
+                                        <span class="carttridge">
+                                            Volume:{{ item.volume_cartridge}}<br>
+                                            Resistance:{{ item.resistance }}
+                                        </span>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
             <div class="description"><p>Description: </p><br>
             <p>{{ product.description }}</p><br>
             </div>
@@ -41,7 +84,7 @@
         {% endif %}
     </div>
 
-
+<!-- Топові продукти  -->
         <div class="top_product_list">
             {% for item  in top_products %}
                 <div class="cart">
@@ -63,6 +106,7 @@
             {% endfor %}
         </div>
 
+<!-- Похожі товари -->
         <div class="related_product">
             {% for item in releted %}
                 <div class="related_cart">

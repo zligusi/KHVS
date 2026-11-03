@@ -24,11 +24,10 @@ class ProductForm(forms.ModelForm):
     top_product = forms.BooleanField(required=False,
                                      label='Top product',
                                      widget=forms.CheckboxInput(attrs={'class':'create_form'}))
-
-    
     class Meta:
         model = Product
-        fields = ['name', 'price', 'description', 'photo', 'stock', 'top_product']
+        fields = ['name', 'price', 'description', 'photo', 'stock',
+                  'top_product', 'group']
         
 
 class DeviceForm(ProductForm):
@@ -41,6 +40,11 @@ class DeviceForm(ProductForm):
                             label='Color',
                             widget=forms.TextInput(attrs={'class':'create_form',
                                                           'placeholder':'Red'}))
+    color_code = forms.CharField(required=False,
+                                 label='Color hex code',
+                                 max_length=7,
+                                 widget= forms.TextInput(attrs={'class': 'create_form', 
+                                                                'placeholder': '#181818'}))
     battery_capacity = forms.IntegerField(required=True,
                                           label='Battery capacity',
                                           widget=forms.NumberInput(attrs={'class':'create_form',
