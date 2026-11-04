@@ -34,11 +34,11 @@ def home (request):
     price_max = request.GET.get('price_max')
 
     if filter_cetegory :
-        products = Product.objects.filter(category__name__in =filter_cetegory)
+        products = products.filter(category__name__in =filter_cetegory)
     if price_min :
-        products = Product.objects.filter(price__gte=price_min)
+        products = products.filter(price__gte=price_min)
     if price_max :
-        products = Product.objects.filter(price__lte=price_max)
+        products = products.filter(price__lte=price_max)
 
         
     return render(request, 'main/home.html', {'products': products,
