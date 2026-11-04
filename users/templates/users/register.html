@@ -1,0 +1,13 @@
+{% extends "main/layout.html" %}
+
+{% block title %}
+    Create account
+{% endblock title %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create account</button>
+    </form>
+{% endblock content %}

@@ -61,3 +61,13 @@ class CustomUserRegisterForm(forms.ModelForm):
                                 label='Enter address',
                                 widget=forms.TextInput(attrs={'class':'register_form', 
                                                              'placeholder':'street Morozova 11 '}))
+    address_2 = forms.CharField(required=False,
+                                    label='Enter address two ',
+                                    widget=forms.TextInput(attrs={'class':'register_form', 
+                                                                 'placeholder':'street Petrova 132'}))
+
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'password1', 'password2', 
+                  'first_name', 'last_name', 'date_of_birth',
+                  'city', 'postal_code', 'address_1', 'address_2']
