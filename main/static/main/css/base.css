@@ -5,10 +5,26 @@
   padding: 0;
 }
 
-/* Отступ сверху = высота шапки, чтобы контент не уехал под неё */
+/* Фон ставим и на html, и на body, чтобы белого не осталось нигде */
+html,
+body {
+  background-color: #181818 !important;
+  min-height: 100vh;
+}
+
+/* Сверху отступ = высота шапки (70px), слева = боковая панель (60px) + зазор */
 body {
   padding-top: 70px;
+  padding-left: 80px !important;
+  padding-right: 20px;
 }
+
+/* Отступ слева уже даёт body, поэтому у main его нет */
+main {
+  margin-left: 0 !important;
+}
+
+/* ===== Шапка ===== */
 
 /* Шапка зафиксирована сверху. position: relative не нужен,
    fixed сам создаёт систему координат для absolute-детей */
@@ -22,7 +38,7 @@ header {
   z-index: 1000;
   display: flex;
   align-items: center;
-  justify-content: flex-end; /* header-right прижат вправо */
+  justify-content: flex-end; /* header_right прижат вправо */
   padding: 0 20px;
 }
 
@@ -36,13 +52,12 @@ header {
 
 /* Единое увеличение на 5% при наведении.
    У .search свой transform для центрирования, поэтому он ниже отдельно */
-.basket:hover,
 .user_login a:hover {
   transform: scale(1.05);
 }
 
 /* Поиск строго по центру шапки: absolute вырывает его из потока,
-   left 50% двигает левый край в середину, translateX(-50%) сдвигает
+   left 50% двигает левый край в середину, translate(-50%) сдвигает
    назад на половину собственной ширины */
 .search {
   position: absolute;
@@ -115,6 +130,7 @@ header {
 
 .basket:hover {
   background-color: rgba(255, 122, 0, 0.15);
+  transform: scale(1.05);
 }
 
 /* Стилизуем сами div login и register как кнопки.
@@ -148,12 +164,10 @@ header {
   transform: scale(1.05);
 }
 
-/* goood 
-
 /* ===== Боковая панель: узкая, при наведении выезжает ===== */
 
 /* В обычном состоянии 60px: видны только иконки.
-   При наведении на панель ширина растёт до 240px и показываются подписи.
+   При наведении ширина растёт до 300px и показываются подписи.
    overflow hidden прячет текст, пока панель узкая */
 aside {
   position: fixed;
@@ -172,12 +186,6 @@ aside {
 
 aside:hover {
   width: 300px;
-}
-
-/* Контент не сдвигаем при выезде: панель наезжает поверх него (overlay),
-   поэтому отступ у main равен ширине узкой панели */
-main {
-  margin-left: 60px;
 }
 
 aside ul {
@@ -202,8 +210,7 @@ aside ul li:hover {
   background-color: rgba(255, 122, 0, 0.12);
 }
 
-/* Ссылка и summary на всю ширину, иконка слева, текст за ней.
-   Увеличение scale для боковой панели убрали: оно двигало края и дёргало ширину */
+/* Ссылка и summary на всю ширину, иконка слева, текст за ней */
 aside ul li a,
 aside ul li a:link,
 aside ul li a:visited,
@@ -248,10 +255,18 @@ aside:hover ul li summary span {
   opacity: 1;
 }
 
-/* Вложенный список в details: контакты, соцсети, номера */
+aside ul li a:hover,
+aside ul li summary:hover {
+  color: #fff !important;
+}
+
+/* Вложенный список в details: контакты, соцсети, номера.
+   Ширина по самому длинному тексту, не уже панели */
 aside details ul {
   margin-top: 6px;
   padding-left: 0;
+  width: max-content;
+  min-width: 100%;
 }
 
 aside details ul li {
@@ -263,10 +278,6 @@ aside details ul li a {
   padding-left: 14px;
 }
 
-aside ul li a:hover,
-aside ul li summary:hover {
-  color: #fff !important;
-}
 /* Ссылка-обёртка: на всю ширину, без подчёркивания и синего цвета, курсор-рука */
 aside ul a,
 aside ul a:link,
@@ -278,19 +289,21 @@ aside ul a:visited {
   cursor: pointer;
 }
 
-/* li внутри ссылки: рамка, иконка слева, текст за ней */
+/* li внутри ссылки: рамка, иконка сверху, подпись под ней, всё по левому краю */
 aside ul a li {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
   width: 100%;
-  padding: 10px 0 10px 14px;
+  padding: 8px 0 8px 12px;
   border: 2px solid #ff7a00;
   border-left: none;
   border-radius: 0 8px 8px 0;
   color: inherit;
   font-size: 14px;
-  white-space: nowrap;
+  white-space: normal; /* разрешаем перенос строк */
+  overflow: hidden;
   list-style: none;
   transition: background-color 0.2s ease;
 }
@@ -301,29 +314,13 @@ aside ul a:hover li {
   color: #fff;
 }
 
-/* Иконка внутри li */
-aside ul a li i {
-  font-size: 22px;
-  width: 26px;
-  flex-shrink: 0;
-  text-align: center;
-  color: #ff7a00;
-}
-/* Пункт: иконка сверху, подпись под ней, всё по левому краю */
-aside ul a li {
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  padding: 8px 0 8px 12px;
-  white-space: normal; /* разрешаем перенос строк */
-  overflow: hidden;
-}
-
-/* Иконка меньше */
+/* Иконка внутри li: меньше обычной */
 aside ul a li i {
   font-size: 18px;
   width: 22px;
+  flex-shrink: 0;
   text-align: left;
+  color: #ff7a00;
 }
 
 /* Подпись мелким шрифтом, длинные слова переносятся, а не режутся */
@@ -333,14 +330,15 @@ aside ul a li span {
   overflow-wrap: anywhere;
 }
 
-
-/* ===== Фон страницы ===== */
-
-/* Ставим и на html, и на body, чтобы белого не осталось нигде */
-html,
-body {
-  background-color: #181818 !important;
-  min-height: 100vh;
+/* Номер в одну строку: перенос запрещён везде, включая flex-контейнер.
+   Стоит после остальных правил aside, чтобы width: max-content победил */
+aside details ul li,
+aside details ul li a,
+aside details ul a li {
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
+  width: max-content; /* ширина по самому длинному тексту, а не по узкой колонке */
+  min-width: 100%;
 }
 
 /* ===== Страница about ===== */
@@ -365,12 +363,10 @@ body {
 
 /* ===== Home: приветствие для гостей ===== */
 
-/* display block и width 100% не дают блоку сжаться,
-   box-sizing считает padding внутри ширины */
+/* display block и width 100% не дают блоку сжаться */
 .welcome {
   display: block;
   width: 100%;
-  box-sizing: border-box;
   flex-shrink: 0;
   margin: 20px 0;
   padding: 32px 36px;
@@ -402,7 +398,6 @@ body {
   grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
   gap: 16px;
   width: 100%;
-  box-sizing: border-box;
 }
 
 /* Ссылки-обёртки карточек сами становятся ячейками сетки */
@@ -481,20 +476,11 @@ body {
 
 /* ===== Ссылки-обёртки: никакого синего и подчёркивания ===== */
 
-.top_product_list a,
-.top_product_list a:link,
-.top_product_list a:visited,
-.top_product_list a:hover,
 .product_list a,
 .product_list a:link,
 .product_list a:visited,
 .product_list a:hover {
   color: #e0e0e0 !important;
-  text-decoration: none !important;
-}
-
-.top_product_list a *,
-.product_list a * {
   text-decoration: none !important;
 }
 
@@ -504,6 +490,12 @@ body {
 .top_product_list a:visited,
 .top_product_list a:hover {
   color: #f0e6d2 !important;
+  text-decoration: none !important;
+}
+
+.top_product_list a *,
+.product_list a * {
+  text-decoration: none !important;
 }
 
 .top_product_list a small {
@@ -516,77 +508,21 @@ body {
 
 /* ===== Кнопка buy: единственный оранжевый элемент в карточке ===== */
 
-/* Рамка и скругление прямо на div buy, отдельная обёртка не нужна */
-.buy {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin-top: auto; /* прижимает кнопку к низу карточки */
-  padding: 8px 16px;
-  border: 2px solid #ff7a00;
-  border-radius: 8px;
-  background-color: transparent;
-  transition: transform 0.2s ease, background-color 0.2s ease;
-}
-
-/* h5 внутри кнопки: крупный, оранжевый */
-.top_product_list a .buy h5,
-.product_list a .buy h5 {
-  margin: 0;
-  font-size: 20px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #ff7a00 !important;
-}
-
-.buy:hover {
-  background-color: #ff7a00;
-  transform: scale(1.05);
-}
-
-.top_product_list a .buy:hover h5,
-.product_list a .buy:hover h5 {
-  color: #181818 !important;
-}
-
-/* Номер в одну строку: перенос запрещён везде, включая flex-контейнер */
-aside details ul li,
-aside details ul li a,
-aside details ul a li {
-  flex-wrap: nowrap !important;
-  white-space: nowrap !important;
-  width: max-content; /* ширина по самому длинному тексту, а не по узкой колонке */
-  min-width: 100%;
-}
-
-/* Сам раскрытый список разрешаем шире панели без обрезки */
-aside details ul {
-  width: max-content;
-  min-width: 100%;
-}
-/* Контент не уезжает под боковую панель (60px) + зазор */
-body {
-  padding-left: 80px !important;
-  padding-right: 20px;
-}
-
-/* Убираем старый отступ у main, чтобы он не сложился с этим */
-main {
-  margin-left: 0 !important;
-}
-
-/* Кнопка buy: оранжевая рамка со скруглением.
-   Цвет текста не задаю, остаётся прежним */
+/* Рамка и скругление прямо на div buy, отдельная обёртка не нужна.
+   Цвет текста здесь не задаём */
 .buy {
   display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   width: 100%;
-  margin-top: auto;
+  margin-top: auto; /* прижимает кнопку к низу карточки */
   padding: 8px 16px !important;
   border: 2px solid #ff7a00 !important;
   border-radius: 8px !important;
+  background-color: transparent;
   cursor: pointer;
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
@@ -599,20 +535,26 @@ main {
 .buy i {
   font-size: 18px;
   color: #ff7a00;
-  margin-right: 8px;
-}
-.buy {
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  gap: 8px;
-}
-
-.buy i {
   margin: 0;
 }
 
 .buy h5 {
   margin: 0;
+}
+
+/* h5 внутри кнопки: крупный, оранжевый */
+.top_product_list a .buy h5,
+.product_list a .buy h5 {
+  margin: 0;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #ff7a00 !important;
+}
+
+.top_product_list a .buy:hover h5,
+.product_list a .buy:hover h5 {
+  color: #181818 !important;
 }
 
 /* Ссылка внутри кнопки: на всю ширину, иконка и надпись в одну строку */
@@ -639,6 +581,9 @@ main {
   color: #ff7a00 !important;
   text-decoration: none !important;
 }
+
+/* ===== Выбор категории: три равных блока ===== */
+
 /* Три блока одинаковые: общий фон, оранжевая рамка со скруглением */
 .device,
 .liquid,
@@ -661,6 +606,7 @@ main {
   transform: scale(1.03);
   box-shadow: 0 0 18px rgba(255, 122, 0, 0.45);
 }
+
 /* Контейнер: три равные колонки на всю ширину и высоту экрана */
 .category_select {
   display: grid !important;
@@ -668,7 +614,6 @@ main {
   gap: 20px;
   width: 100%;
   height: calc(100vh - 110px); /* высота окна минус шапка и отступы */
-  box-sizing: border-box;
 }
 
 /* Блоки: на всю ячейку, оранжевая рамка со скруглением */
@@ -708,6 +653,7 @@ main {
 .category_select > div:hover a {
   color: #ff7a00 !important;
 }
+
 /* ===== Форма создания ===== */
 
 /* Обёртка: по центру, тёмная плашка */
@@ -740,7 +686,6 @@ main {
   color: #fff;
   font-size: 15px;
   outline: none;
-  box-sizing: border-box;
   transition: box-shadow 0.2s ease;
 }
 
@@ -749,26 +694,11 @@ main {
   box-shadow: 0 0 8px rgba(255, 122, 0, 0.6);
 }
 
-/* Кнопки Save и Save and add: залиты оранжевым, текст белый и жирный.
-   Две кнопки в ряд, с отступом между ними */
-.form button[type=«submit»] {
+/* Две кнопки Save и Save and add в ряд, с отступом между ними.
+   Сам вид кнопок задаёт общее правило button ниже */
+.form button[type="submit"] {
   margin-top: 20px;
   margin-right: 10px;
-  padding: 12px 28px;
-  background-color: #ff7a00;
-  border: 2px solid #ff7a00;
-  border-radius: 8px;
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: transform 0.2s ease, background-color 0.2s ease;
-}
-
-.form button[type=«submit»]:hover {
-  background-color: #ff9d3d;
-  border-color: #ff9d3d;
-  transform: scale(1.05);
 }
 
 /* Подсказки и ошибки Django */
@@ -782,11 +712,10 @@ main {
   list-style: none;
 }
 
-/* Кнопки формы: оранжевая заливка, скругление, белый жирный текст.
-   Селектор по тегу и типу, без привязки к родителю.
+/* ===== Все кнопки сайта: оранжевая заливка, скругление, белый жирный текст =====
    !important перебивает стандартный вид браузера */
-button[type=«submit»],
-input[type=«submit»] {
+button,
+input[type="submit"] {
   background-color: #ff7a00 !important;
   border: 2px solid #ff7a00 !important;
   border-radius: 8px !important;
@@ -799,32 +728,15 @@ input[type=«submit»] {
 }
 
 button:hover,
-button[type=«submit»]:hover,
-input[type=«submit»]:hover {
+input[type="submit"]:hover {
   background-color: #ff9d3d !important;
   border-color: #ff9d3d !important;
   transform: scale(1.05);
 }
-button,
-button[type=«submit»] {
-  background-color: #ff7a00 !important;
-  border: 2px solid #ff7a00 !important;
-  border-radius: 8px !important;
-  color: #fff !important;
-  padding: 12px 28px !important;
-  font-size: 16px !important;
-  font-weight: bold !important;
-  cursor: pointer;
-}
 
-button:hover,
-button[type=«submit»]:hover {
-  background-color: #ff9d3d !important;
-  border-color: #ff9d3d !important;
-}
 /* ===== Характеристики: один общий блок ===== */
 
-/* Фон тёмно-синеватый, чтобы отличался и от описания (#242424), и от страницы.
+/* Фон тёмно-синеватый, чтобы отличался и от описания, и от страницы.
    Рамка тонкая, оранжевый оставляем только на заголовке */
 .characteristics {
   margin: 24px 0;
@@ -832,17 +744,6 @@ button[type=«submit»]:hover {
   background-color: #1f2630;
   border: 1px solid #34404f;
   border-radius: 12px;
-  color: #fff;
-}
-
-/* Заголовок «Характеристики»: оранжевый, крупный */
-.characteristics h2,
-.characteristics h3,
-.characteristics_title {
-  margin: 0 0 14px 0;
-  font-size: 22px;
-  font-weight: bold;
-  color: #ff7a00;
 }
 
 /* Весь текст внутри блока белый, с хорошим межстрочным интервалом */
@@ -852,10 +753,15 @@ button[type=«submit»]:hover {
   line-height: 1.6;
 }
 
-/* Заголовок перебивает общий белый цвет, потому что стоит ниже по специфичности */
+/* Заголовок «Характеристики»: оранжевый, крупный.
+   Селекторы с двумя классами нужны, чтобы перебить белый цвет выше */
 .characteristics h2,
 .characteristics h3,
+.characteristics_title,
 .characteristics .characteristics_title {
+  margin: 0 0 14px 0;
+  font-size: 22px;
+  font-weight: bold;
   color: #ff7a00;
 }
 
@@ -874,55 +780,8 @@ button[type=«submit»]:hover {
 .characteristics p:last-child {
   border-bottom: none;
 }
-/* Весь текст в detail и в description белый, перебивает любые другие цвета */
-.detail,
-.detail *,
-.description,
-.description * {
-  color: #fff !important;
-}
 
-/* Заголовки блоков остаются оранжевыми */
-.description .description_title,
-.detail .description_title,
-.detail .characteristics h2,
-.detail .characteristics h3,
-.detail .characteristics_title {
-  color: #ff7a00 !important;
-}
-/* ===== Описание: отдельная плашка, как у характеристик, но другого цвета ===== */
-
-.description {
-  margin: 24px 0;
-  padding: 20px 24px;
-  background-color: #2a1d10; /* тёмно-коричневый, чтобы отличался от синеватых характеристик */
-  border: 2px solid #ff7a00;
-  border-radius: 12px;
-}
-
-.description,
-.description * {
-  color: #fff !important;
-}
-
-/* Заголовок «Описание»: оранжевый, с линией под ним */
-.description .description_title {
-  margin: 0 0 12px 0;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #1f2630;
-  font-size: 22px;
-  font-weight: bold;
-  color: #ff7a00 !important;
-}
-
-.description .description_text {
-  margin: 0;
-  font-size: 16px;
-  line-height: 1.6;
-  white-space: pre-line;
-}
-
-/* ===== Описание: отдельная плашка, цвет как у характеристик ===== */
+/* ===== Описание: плашка того же цвета, что и характеристики ===== */
 
 .description {
   margin: 24px 0;
@@ -932,6 +791,9 @@ button[type=«submit»]:hover {
   border-radius: 12px;
 }
 
+/* Весь текст в detail и в description белый, перебивает любые другие цвета */
+.detail,
+.detail *,
 .description,
 .description * {
   color: #fff !important;
@@ -944,7 +806,6 @@ button[type=«submit»]:hover {
   border-bottom: 1px solid #34404f;
   font-size: 22px;
   font-weight: bold;
-  color: #ff7a00 !important;
 }
 
 .description .description_text {
@@ -953,218 +814,194 @@ button[type=«submit»]:hover {
   line-height: 1.6;
   white-space: pre-line;
 }
-/* -——— Фильтр -——— */
-.filter {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 20px;
-    background: #1F2630;
-    border: 1px solid #34404F;
-    border-radius: 14px;
-    padding: 18px;
-    margin-bottom: 30px;
-    color: #ffffff;
+
+/* Заголовки блоков остаются оранжевыми, перебивая общий белый */
+.description .description_title,
+.detail .description_title,
+.detail .characteristics h2,
+.detail .characteristics h3,
+.detail .characteristics_title {
+  color: #ff7a00 !important;
 }
 
-/* Если категории и цена лежат внутри form, она тоже в один ряд */
+/* ===== Фильтр ===== */
+
+/* Всё равномерно относительно центра: и сам блок, и форма внутри него */
+.filter,
 .filter form {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 20px;
-    width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 0;
 }
 
-/* Слева: категории */
+.filter {
+  padding: 6px 12px;
+  margin-bottom: 15px;
+  background: #1f2630;
+  border: 1px solid #34404f;
+  border-radius: 14px;
+  color: #fff;
+}
+
+.filter form {
+  width: 100%;
+}
+
+/* Слева: категории, ширина по содержимому */
 .filter_category {
-    flex: 1;
-    min-width: 0;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid #34404F;
-    border-radius: 12px;
-    padding: 12px 16px;
-    color: #ffffff;
+  flex: 0 1 220px;
+  min-width: 0;
+  margin: 0;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid #34404f;
+  border-radius: 12px;
+  color: #fff;
 }
 
 .filter_category summary {
-    cursor: pointer;
-    font-weight: 600;
-    color: #ffffff;
-    list-style: none;
-    padding: 6px 0;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  color: #fff;
+  list-style: none;
+  padding: 2px 0;
 }
 
 .filter_category summary::-webkit-details-marker {
-    display: none;
+  display: none;
 }
 
 .filter_category summary::after {
-    content: «▾»;
-    float: right;
-    color: #e8833a;
-    transition: transform 0.2s;
+  content: "▾";
+  float: right;
+  color: #e8833a;
+  transition: transform 0.2s;
 }
 
 .filter_category details[open] summary::after {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 /* Пункты списка по порядку, друг под другом */
 .filter_category label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    padding: 9px 4px;
-    color: #ffffff;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 4px;
+  font-size: 13px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.2s;
 }
 
 .filter_category label:hover {
-    background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 /* Справа: цена, min и max в одну линию */
 .filter_price {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 12px;
-    flex: 0 0 auto;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid #34404F;
-    border-radius: 12px;
-    padding: 12px 16px;
-    color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid #34404f;
+  border-radius: 12px;
+  color: #fff;
 }
 
 .min_price,
 .max_price {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
 }
 
 .min_price label,
 .max_price label {
-    color: #ffffff;
-    font-size: 14px;
-    white-space: nowrap;
+  color: #fff;
+  font-size: 12px;
+  white-space: nowrap;
 }
 
-/* Все поля ввода: скруглённая оранжевая обводка */
-.filter input[type=«number»],
-.filter input[type=«text»] {
-    background: #181818;
-    color: #ffffff;
-    border: 2px solid #e8833a;
-    border-radius: 8px;
-    padding: 6px 8px;
-    font-size: 14px;
-    font-family: inherit;
-}
-
-/* Узкие поля цены: 4 цифры и 2 после запятой */
+/* Узкие поля цены */
 .min_price input,
 .max_price input {
-    width: 90px;
-    text-align: center;
+  width: 65px;
+  padding: 3px 5px;
+  font-size: 12px;
+  text-align: center;
+}
+
+/* Все поля ввода в фильтре: скруглённая оранжевая обводка, тёмный фон */
+.filter input:not([type="checkbox"]):not([type="submit"]):not([type="button"]) {
+  background: #181818 !important;
+  color: #fff !important;
+  border: 2px solid #e8833a !important;
+  border-radius: 8px !important;
+  font-family: inherit;
 }
 
 .filter input:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(232, 131, 58, 0.25);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(232, 131, 58, 0.25);
 }
 
 /* Чекбоксы: оранжевая рамка со скруглением, белая заливка */
-.filter input[type=«checkbox»] {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 18px;
-    height: 18px;
-    background: #ffffff;
-    border: 2px solid #e8833a;
-    border-radius: 5px;
-    cursor: pointer;
-    flex-shrink: 0;
-    position: relative;
-    margin: 0;
+.filter input[type="checkbox"] {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  width: 18px !important;
+  height: 18px !important;
+  background: #fff !important;
+  border: 2px solid #e8833a !important;
+  border-radius: 5px !important;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+  margin: 0;
 }
 
-.filter input[type=«checkbox»]:checked::after {
-    content: «✔»;
-    position: absolute;
-    top: -2px;
-    left: 2px;
-    font-size: 13px;
-    color: #e8833a;
-}
-/* -——— Фильтр: компактнее, ровнее, кнопка справа -——— */
-.filter {
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 10px 16px;
-    margin-bottom: 20px;
+input[type="checkbox"][name="filter_category"] {
+  min-width: 18px;
+  margin: 0 8px 0 0;
+  accent-color: #e8833a;
 }
 
-.filter form {
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
+.filter input[type="checkbox"]:checked::after,
+input[type="checkbox"][name="filter_category"]:checked::after {
+  content: "✔";
+  position: absolute;
+  top: -2px;
+  left: 2px;
+  font-size: 13px;
+  color: #e8833a;
 }
 
-/* Категории: не прижаты к левому краю, ширина по содержимому */
-.filter_category {
-    flex: 0 1 220px;
-    padding: 6px 12px;
-    margin: 0 auto 0 20px;
-}
-
-.filter_category summary {
-    padding: 4px 0;
-    font-size: 14px;
-}
-
-.filter_category label {
-    padding: 6px 4px;
-    font-size: 14px;
-}
-
-/* Цена: меньше и аккуратнее */
-.filter_price {
-    padding: 6px 12px;
-    gap: 10px;
-}
-
-.min_price input,
-.max_price input {
-    width: 75px;
-    padding: 4px 6px;
-    font-size: 13px;
-}
-
-.min_price label,
-.max_price label {
-    font-size: 13px;
-}
-
-/* Кнопка Apply: уезжает в правый угол */
+/* Кнопка Apply: компактнее общих кнопок, поэтому !important
+   (общее правило button тоже с !important) */
 .apply_button {
-    margin-left: auto;
-    flex: 0 0 auto;
+  margin: 0;
+  flex: 0 0 auto;
 }
 
 .apply_button button,
-.apply_button input[type=«submit»] {
-    padding: 8px 18px;
-    font-size: 14px;
+.apply_button input[type="submit"] {
+  padding: 6px 14px !important;
+  font-size: 13px !important;
 }
-/* -——— Принудительно: иконки и поля -——— */
+
+/* ===== Иконки: единый оранжевый цвет ===== */
+
 i,
 i::before,
 .fa,
@@ -1172,7 +1009,7 @@ i::before,
 .far,
 .fa-solid,
 .fa-regular {
-    color: #e8833a !important;
+  color: #e8833a !important;
 }
 
 .header_search:hover i,
@@ -1180,234 +1017,14 @@ i::before,
 .header_register:hover i,
 .header_account:hover i,
 .header_logout:hover i {
-    color: #181818 !important;
+  color: #181818 !important;
 }
 
-.filter input:not([type=«checkbox»]):not([type=«submit»]):not([type=«button»]) {
-    border: 2px solid #e8833a !important;
-    border-radius: 8px !important;
-    background: #181818;
-    color: #ffffff;
-}
-
-/* -——— Фильтр: ещё компактнее, цена в правой части -——— */
-.filter {
-    padding: 6px 12px;
-    margin-bottom: 15px;
-    gap: 12px;
-}
-
-.filter_category {
-    padding: 4px 10px;
-}
-
-.filter_category summary {
-    padding: 2px 0;
-    font-size: 13px;
-}
-
-.filter_category label {
-    padding: 4px;
-    font-size: 13px;
-}
-
-.filter_price {
-    margin-left: auto;
-    padding: 4px 10px;
-    gap: 8px;
-}
-
-.min_price input,
-.max_price input {
-    width: 65px;
-    padding: 3px 5px;
-    font-size: 12px;
-}
-
-.min_price label,
-.max_price label {
-    font-size: 12px;
-}
-
-.apply_button button,
-.apply_button input[type=«submit»] {
-    padding: 6px 14px;
-    font-size: 13px;
-}
-/* -——— Чекбокс: оранжевая обводка, белая заливка -——— */
-.filter input[type=«checkbox»] {
-    -webkit-appearance: none !important;
-    appearance: none !important;
-    width: 18px !important;
-    height: 18px !important;
-    background: #ffffff !important;
-    border: 2px solid #e8833a !important;
-    border-radius: 5px !important;
-    cursor: pointer;
-    flex-shrink: 0;
-    position: relative;
-    margin: 0;
-}
-
-.filter input[type=«checkbox»]:checked::after {
-    content: «✔»;
-    position: absolute;
-    top: -2px;
-    left: 2px;
-    font-size: 13px;
-    color: #e8833a;
-}
-/* -——— Фильтр: всё равномерно относительно центра -——— */
-.filter,
-.filter form {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-    gap: 0;
-}
-
-.filter_category,
-.filter_price,
-.apply_button {
-    margin: 0;
-}
-/* -——— Чекбоксы по id 1, 2, 3 -——— */
-[id=«1»],
-[id=«2»],
-[id=«3»] {
-    -webkit-appearance: none !important;
-    appearance: none !important;
-    width: 18px !important;
-    height: 18px !important;
-    background: #ffffff !important;
-    border: 2px solid #e8833a !important;
-    border-radius: 5px !important;
-    cursor: pointer;
-    position: relative;
-    margin: 0;
-}
-
-[id=«1»]:checked::after,
-[id=«2»]:checked::after,
-[id=«3»]:checked::after {
-    content: «✔»;
-    position: absolute;
-    top: -2px;
-    left: 2px;
-    font-size: 13px;
-    color: #e8833a;
-}
-
-/* -——— Поля цены по id 4 и 5 -——— */
-[id=«4»],
-[id=«5»] {
-    border: 2px solid #e8833a !important;
-    border-radius: 8px !important;
-    background: #181818 !important;
-    color: #ffffff !important;
-    outline: none;
-}
-input[type=«checkbox»][name=«filter_category»] {
-    -webkit-appearance: none !important;
-    appearance: none !important;
-    width: 18px !important;
-    height: 18px !important;
-    min-width: 18px;
-    background-color: #ffffff !important;
-    border: 2px solid #e8833a !important;
-    border-radius: 5px !important;
-    cursor: pointer;
-    position: relative;
-    margin: 0 8px 0 0;
-    accent-color: #e8833a;
-}
-
-input[type=«checkbox»][name=«filter_category»]:checked {
-    background-color: #ffffff !important;
-}
-
-input[type=«checkbox»][name=«filter_category»]:checked::after {
-    content: «✔»;
-    position: absolute;
-    top: -2px;
-    left: 2px;
-    font-size: 13px;
-    color: #e8833a;
-}
-/* -——— Основной блок выбора вариантов -——— */
-.product_selector {
-    margin: 18px 0;
-}
-
-/* Три селектора внутри: небольшой отступ друг от друга */
-.color_selector,
-.color_select,
-.taste_selector,
-.carttridge_selector {
-    margin: 10px 0;
-}
-
-/* Все ссылки: белый текст, без подчёркивания, не синие */
-.color_selector a,
-.color_select a,
-.taste_selector a,
-.carttridge_selector a {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 7px 14px;
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: 10px;
-    font-size: 14px;
-    letter-spacing: 0.3px;
-}
-
-.color_selector a:visited,
-.color_select a:visited,
-.taste_selector a:visited,
-.carttridge_selector a:visited,
-.color_selector a:hover,
-.color_select a:hover,
-.taste_selector a:hover,
-.carttridge_selector a:hover {
-    color: #ffffff;
-    text-decoration: none;
-}
-
-/* Цвет: кружок. Заливка приходит из style в HTML */
-.color_dote {
-    display: inline-block;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    flex-shrink: 0;
-}
-
-.color_name {
-    color: #ffffff;
-}
-
-/* Вкус и картридж: оранжевая скруглённая обводка */
-.taste_selector a,
-.carttridge_selector a {
-    border: 2px solid #e8833a;
-    border-radius: 10px;
-}
-
-.taste,
-.carttridge {
-    color: #ffffff;
-}
-/* ============================================
-   Селекторы вариантов товара: цвет, вкус, картридж
-   ============================================ */
+/* ===== Селекторы вариантов товара: цвет, вкус, картридж ===== */
 
 /* Основной блок: верхний отступ средний, нижний больше */
 .product_selector {
-    margin: 30px 0 60px !important;
+  margin: 30px 0 60px !important;
 }
 
 /* Три селектора внутри: небольшой отступ друг от друга */
@@ -1415,7 +1032,7 @@ input[type=«checkbox»][name=«filter_category»]:checked::after {
 .color_selector,
 .taste_selector,
 .carttridge_selector {
-    margin: 12px 0 !important;
+  margin: 12px 0 !important;
 }
 
 /* Ссылка = один общий элемент с оранжевой скруглённой обводкой */
@@ -1423,16 +1040,16 @@ input[type=«checkbox»][name=«filter_category»]:checked::after {
 .color_selector a,
 .taste_selector a,
 .carttridge_selector a {
-    display: inline-flex !important;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 16px;
-    border: 2px solid #e8833a !important;
-    border-radius: 10px !important;
-    color: #ffffff !important;
-    text-decoration: none !important;
-    font-size: 14px;
-    letter-spacing: 0.3px;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border: 2px solid #e8833a !important;
+  border-radius: 10px !important;
+  color: #fff !important;
+  text-decoration: none !important;
+  font-size: 14px;
+  letter-spacing: 0.3px;
 }
 
 .color_select a:visited,
@@ -1443,26 +1060,26 @@ input[type=«checkbox»][name=«filter_category»]:checked::after {
 .color_selector a:hover,
 .taste_selector a:hover,
 .carttridge_selector a:hover {
-    color: #ffffff !important;
-    text-decoration: none !important;
+  color: #fff !important;
+  text-decoration: none !important;
 }
 
 /* Кружок цвета: заливка приходит из style в HTML */
 .color_dote {
-    display: inline-block !important;
-    width: 18px !important;
-    height: 18px !important;
-    min-width: 18px;
-    border-radius: 50% !important;
-    border: none !important;
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35);
-    flex-shrink: 0;
+  display: inline-block !important;
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px;
+  border-radius: 50% !important;
+  border: none !important;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35);
+  flex-shrink: 0;
 }
 
 /* Текст внутри */
 .color_name,
 .taste,
 .carttridge {
-  color: #ffffff !important;
+  color: #fff !important;
   text-decoration: none !important;
 }
