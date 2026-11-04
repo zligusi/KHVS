@@ -12,11 +12,11 @@ def get_top_products(limit_d, limit_l, limit_c):
     liquids = Product.objects.filter(top_product=True,
                                      category__name='Liquid'
                                      )[:limit_l]
-    cartridges = Product.objects.filter(top_product=True,
-                                        category__name='Cartridge'
+    carttridges = Product.objects.filter(top_product=True,
+                                        category__name='Carttridge'
                                         )[:limit_c]
 
-    return list(devices) + list(liquids) + list(cartridges)
+    return list(devices) + list(liquids) + list(carttridges)
 
 
 def get_similar_product(product, limit):
