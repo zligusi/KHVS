@@ -7,6 +7,7 @@
 {% block content %}
 <!-- детальна інформація про товар-->
     <div class="detail">
+        <h1>{{ product.name }}</h1><br>
         <!-- цикл виведення фото -->
         {% for image in images %}
             {% if product.photo %}
@@ -15,7 +16,7 @@
         {% endfor %}
 
 
-            <h2>{{ product.name }}</h2><br>
+            
             <p><b>{{ product.price }}</b>grn.</p><br>
 
 <!--Вивід товару однакової серії -->

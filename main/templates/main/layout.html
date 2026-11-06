@@ -18,7 +18,9 @@
     <header>
        <div class="search">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Search...">
+            <form method="get" id="search_form">
+                <input type="text" name="search" placeholder="Search...">
+            </form>
         </div>
 
         <div class="header_right">
@@ -72,5 +74,21 @@
     sidebar.querySelectorAll('details').forEach((d) => d.removeAttribute('open'));
   });
     </script>
+    <script>
+document.getElementById('search_form').addEventListener('submit', function(event) {
+    // 1. Отменяем стандартную перезагрузку страницы
+    event.preventDefault(); 
+    
+    // 2. Получаем значение из инпута
+    const searchInput = this.querySelector('input[name="search"]');
+    const query = searchInput.value.trim();
+    
+    if (query) {
+        // 3. Перенаправляем пользователя на страницу поиска в Django
+        // Замените '/search/' на ваш реальный URL, который обрабатывает поиск в views.py
+        window.location.href = /search/?search=${encodeURIComponent(query)};
+    }
+});
+</script>
 </body>
 </html>

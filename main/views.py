@@ -4,6 +4,8 @@ from .models import Product, ProductImage
 from .models import Category
 from .forms import DeviceForm, LiquidForm, CartridgeForm
 from django.http import Http404
+from django.db.models import Q
+
 
 def get_top_products(limit_d, limit_l, limit_c):
     devices = Product.objects.filter(top_product=True,
@@ -27,19 +29,26 @@ def get_similar_product(product, limit):
 def home (request):
     products = Product.objects.all()
 
+    search = request.GET.get('search', '').strip()
+    
     top_product = get_top_products(limit_d=5, limit_l=3, limit_c=2)
 
     filter_cetegory = request.GET.getlist('filter_cetegory')
     price_min = request.GET.get('price_min')
     price_max = request.GET.get('price_max')
 
+
     if filter_cetegory :
-        products = products.filter(category__name__in =filter_cetegory)
+        products = products.filter(category__name__in=filter_cetegory)
     if price_min :
         products = products.filter(price__gte=price_min)
     if price_max :
         products = products.filter(price__lte=price_max)
-
+    if search :
+        for word in search.strip():
+            products = products.filter(Q(description__icontains=word) | Q(name__icontains=word))
+        products = products.distinct()
+    
         
     return render(request, 'main/home.html', {'products': products,
                                               'top_products': top_product})
