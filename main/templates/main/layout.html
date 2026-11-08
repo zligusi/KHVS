@@ -17,9 +17,10 @@
  <!-- Верхня панель управління -->
     <header>
        <div class="search">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <form method="get" id="search_form">
+            <form method="get" id="search_form" action="{% url 'home' %}">
+                <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
                 <input type="text" name="search" placeholder="Search...">
+                <button type=«submit» class=«search_hidden_btn» tabindex=«-1» aria-hidden=«true»>Найти</button>
             </form>
         </div>
 
@@ -74,21 +75,5 @@
     sidebar.querySelectorAll('details').forEach((d) => d.removeAttribute('open'));
   });
     </script>
-    <script>
-document.getElementById('search_form').addEventListener('submit', function(event) {
-    // 1. Отменяем стандартную перезагрузку страницы
-    event.preventDefault(); 
-    
-    // 2. Получаем значение из инпута
-    const searchInput = this.querySelector('input[name="search"]');
-    const query = searchInput.value.trim();
-    
-    if (query) {
-        // 3. Перенаправляем пользователя на страницу поиска в Django
-        // Замените '/search/' на ваш реальный URL, который обрабатывает поиск в views.py
-        window.location.href = /search/?search=${encodeURIComponent(query)};
-    }
-});
-</script>
 </body>
 </html>

@@ -28,14 +28,13 @@ def get_similar_product(product, limit):
 
 def home (request):
     products = Product.objects.all()
-
-    search = request.GET.get('search', '').strip()
     
     top_product = get_top_products(limit_d=5, limit_l=3, limit_c=2)
 
     filter_cetegory = request.GET.getlist('filter_cetegory')
     price_min = request.GET.get('price_min')
     price_max = request.GET.get('price_max')
+    search = request.GET.get('search', '').strip()
 
 
     if filter_cetegory :

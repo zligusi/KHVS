@@ -1083,3 +1083,19 @@ i::before,
   color: #fff !important;
   text-decoration: none !important;
 }
+#search_form button.search_hidden_btn,
+#search_form button.search_hidden_btn[type=«submit»] {
+    all: unset !important;
+    display: block !important;
+    width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    font-size: 0 !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    transition: none !important;
+}
